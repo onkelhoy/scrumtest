@@ -1,0 +1,31 @@
+{
+  "autorun": true,
+  "autokill": true,
+  "terminals": [
+    {
+      "name": "Git",
+      "description": "Main and Git commands here",
+      "icon": "code"
+    },
+    {
+      "name": "Converter",
+      "description": "Responsible to convert xlsx to JSON",
+      "icon": "code",
+      "cwd": "./converter"
+    },
+    {
+      "name": "react app",
+      "description": "typescriped create react app project",
+      "icon": "code",
+      "cwd": "./scrumtest",
+      "command": "npm run start"
+    },
+    {
+      "name": "[watcher] react app",
+      "description": "running typescript watch mode",
+      "icon": "code",
+      "cwd": "./scrumtest",
+      "command": "npm run watch"
+    }
+  ]
+}
