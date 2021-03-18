@@ -1,0 +1,13 @@
+div.list-view ul {
+  list-style: none;
+  width: 100%;
+  display: block;
+}
+
+div.list-view ul > li {
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

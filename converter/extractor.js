@@ -15,7 +15,7 @@ module.exports = function getQuestions(data) {
 
       question = {
         id: row[0],
-        question: row[1],
+        text: row[1],
         options: [],
         answers: [],
         desiredAnswers: null,

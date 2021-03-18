@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
 import Brain from 'components/Brain';
+import 'styles/index.css';
 
 ReactDOM.render(
   <React.StrictMode>

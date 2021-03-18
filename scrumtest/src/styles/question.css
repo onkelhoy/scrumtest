@@ -1,0 +1,8 @@
+div.question {
+  width: 90%;
+  height: 80%;
+  min-height: 300px;
+
+  display: grid;
+  grid-template-rows: 3fr 1fr 2fr;
+}

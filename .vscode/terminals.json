@@ -11,14 +11,15 @@
       "name": "Converter",
       "description": "Responsible to convert xlsx to JSON",
       "icon": "code",
-      "cwd": "./converter"
+      "cwd": "./converter",
+      "command": "npm start"
     },
     {
       "name": "react app",
       "description": "typescriped create react app project",
       "icon": "code",
       "cwd": "./scrumtest",
-      "command": "npm run start"
+      "command": "npm start"
     },
     {
       "name": "[watcher] react app",
