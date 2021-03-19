@@ -156,7 +156,6 @@ div.question {
   margin-top: 2rem;
   margin-bottom: 2rem;
   border-radius: 0.3rem;
-  min-width: 300px;
 
   transition: all 200ms ease;
 }
@@ -250,5 +249,15 @@ div.question {
 @keyframes Submit {
   0% {
     padding: 1rem 3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .question > ul {
+    width: 99%;
+  }
+
+  .frame {
+    margin-bottom: 1rem;
   }
 }
