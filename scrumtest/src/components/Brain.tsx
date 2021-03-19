@@ -9,10 +9,6 @@ import List from './List';
 import Blank from './Blank';
 
 
-export interface Props {
-
-}
-
 export enum STATES {
   loading,
   question,
@@ -30,9 +26,9 @@ interface State {
 }
 
 
-export default class Brain extends React.Component {
+export default class Brain extends React.Component<{}, State> {
 
-  state:State = {
+  state = {
     score: 0,
     index: 0,
     finished: {},
@@ -41,7 +37,7 @@ export default class Brain extends React.Component {
   }
 
   static Timer:null | number;
-
+  
   componentDidMount() {
     const score = window.localStorage.getItem('score');
     console.log(score)
@@ -65,12 +61,12 @@ export default class Brain extends React.Component {
 
   agree = () => {
     window.localStorage.setItem("score", "0");
-    this.setState({ sate: STATES.list, score: 0 });
+    this.setState({ state: STATES.list, score: 0 });
   }
 
   disagree = () => {
     window.localStorage.clear();
-    this.setState({ sate: STATES.blank });
+    this.setState({ state: STATES.blank });
   }
 
   loadQuestion = (index?:number):void => {
@@ -84,9 +80,9 @@ export default class Brain extends React.Component {
 
   Answer = (answers:number[]):boolean => {
     if (this.state.question === null) return false;
-    if (answers.length === this.state.question.answers.length) {
+    if (answers.length === (this.state.question || { answers: [] }).answers.length) {
       for (let i=0; i<answers.length; i++) {
-        if (answers[i] !== this.state.question.answers[i]) {
+        if (answers[i] !== (this.state.question || { answers: [] }).answers[i]) {
           return false;
         }
       }
@@ -107,7 +103,7 @@ export default class Brain extends React.Component {
         return <Loading />
       case STATES.question: 
         if (this.state.question) 
-          return <Question index={this.state.index} total={DATA.length} Answer={this.Answer} question={this.state.question} />
+          return <Question index={this.state.index} total={DATA.length} Answer={this.Answer} question={this.state.question || {} as IQuestion} />
         return null;
       case STATES.notification:
         return <Notification 
