@@ -91,7 +91,7 @@ export default class Brain extends React.Component<{}, State> {
         this.setState({ score: this.state.score + 1});
         window.localStorage.setItem("score", (this.state.score + 1).toString());
       }
-      Brain.Timer = window.setTimeout(() => this.loadQuestion(this.state.index + 1), 1400);
+      Brain.Timer = window.setTimeout(() => this.loadQuestion(this.state.index + 1), 1000);
       return true;
     }
     return false;
