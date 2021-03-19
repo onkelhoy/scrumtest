@@ -123,7 +123,7 @@ export default class Brain extends React.Component<{}, State> {
 
     return (
       <div className="brain">
-        <List score={this.state.score} count={DATA.length} loadQuestion={this.loadQuestion} />
+        <List score={this.state.score} state={this.state.state} count={DATA.length} loadQuestion={this.loadQuestion} />
         {overlay}
       </div>
     )
