@@ -156,6 +156,7 @@ div.question {
   margin-top: 2rem;
   margin-bottom: 2rem;
   border-radius: 0.3rem;
+  min-width: 300px;
 
   transition: all 200ms ease;
 }
