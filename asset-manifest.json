@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/scrumtest/static/css/main.55982fb5.chunk.css",
+    "main.js": "/scrumtest/static/js/main.71412148.chunk.js",
+    "main.js.map": "/scrumtest/static/js/main.71412148.chunk.js.map",
+    "runtime-main.js": "/scrumtest/static/js/runtime-main.d5123269.js",
+    "runtime-main.js.map": "/scrumtest/static/js/runtime-main.d5123269.js.map",
+    "static/js/2.68620c94.chunk.js": "/scrumtest/static/js/2.68620c94.chunk.js",
+    "static/js/2.68620c94.chunk.js.map": "/scrumtest/static/js/2.68620c94.chunk.js.map",
+    "static/js/3.30857630.chunk.js": "/scrumtest/static/js/3.30857630.chunk.js",
+    "static/js/3.30857630.chunk.js.map": "/scrumtest/static/js/3.30857630.chunk.js.map",
+    "index.html": "/scrumtest/index.html",
+    "static/css/main.55982fb5.chunk.css.map": "/scrumtest/static/css/main.55982fb5.chunk.css.map",
+    "static/js/2.68620c94.chunk.js.LICENSE.txt": "/scrumtest/static/js/2.68620c94.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d5123269.js",
+    "static/js/2.68620c94.chunk.js",
+    "static/css/main.55982fb5.chunk.css",
+    "static/js/main.71412148.chunk.js"
+  ]
+}
