@@ -1,13 +1,77 @@
-div.list-view ul {
-  list-style: none;
+div.list-view {
   width: 100%;
-  display: block;
+  height: 100%;
+  position: absolute;
+  overflow-y: auto;
 }
 
-div.list-view ul > li {
-  width: 4rem;
-  height: 4rem;
-  display: flex;
+div.list-view > h1 {
+  text-align: center;
+  height: 20%;
+
+  border-top: 10rem;
+  font-size: 3rem;
+}
+
+div.list-view > div.container {
+  list-style: none;
+  width: 100%;
+  height: 100%;
+  display: block;
+  margin: 0;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+div.list-view > div.container > ul {
+  list-style: none;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+div.list-view > div.container > ul > li {
+  width: 3rem;
+  height: 3rem;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  transition: transform ease-out 100ms;
+  font-size: 1.2rem;
+
+  border: 4px solid rgb(236, 236, 236);
+}
+
+div.list-view > div.container > ul > li.disabled {
+  cursor: not-allowed;
+}
+div.list-view > div.container > ul > li.disabled:focus {
+  outline: none;
+}
+
+div.list-view > div.container > ul > li.available {
+  border-color: lime;
+}
+
+div.list-view > div.container > ul > li.available:focus {
+  outline: none;
+  transform: scale(1.05);
+}
+
+div.list-view > div.container > ul > li.available:hover {
+  border-color: cornflowerblue;
+  transform: scale(1.1);
+}
+
+div.list-view > div.container > ul > li.selected {
+  border: none;
+  outline: none;
+  transform: scale(1.3);
+  background-color: lime;
+}
+div.list-view > div.container > ul > li.selected:focus {
+  transform: scale(1.3);
 }

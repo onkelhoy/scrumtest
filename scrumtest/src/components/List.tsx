@@ -22,6 +22,7 @@ export default function View ({ count, score, loadQuestion }:Props) {
     <div className="list-view">
       <h1>SCRUM<sub>test</sub></h1>
 
+      <div className="container">
       <ul>
         {new Array(count).fill(0).map((v, index) => (
           <li 
@@ -30,13 +31,14 @@ export default function View ({ count, score, loadQuestion }:Props) {
             onClick={() => submit(index)}
             className={[
               selected === index ? 'selected' : '',
-              index <= score ? 'available' : ''
+              index <= score ? 'available' : 'disabled'
             ].join(' ')}
           >
             {index + 1}
           </li>
         ))}
       </ul>
+      </div>
     </div>
   );
 }

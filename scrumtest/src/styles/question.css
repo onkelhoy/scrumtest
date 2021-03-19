@@ -1,8 +1,253 @@
 div.question {
-  width: 90%;
-  height: 80%;
-  min-height: 300px;
+  width: 100%;
+  height: 100%;
+  padding: 10rem;
+  margin-top: 10rem;
+  background-color: white;
+  position: relative;
 
   display: grid;
-  grid-template-rows: 3fr 1fr 2fr;
+  grid-template-rows: 15rem 6rem 2fr;
+  grid-row-gap: 1rem;
+  justify-items: center;
+}
+
+.question > .frame {
+  width: 60%;
+  position: relative;
+
+  min-width: 300px;
+  padding: 0 2rem;
+  border-left: 0.5rem solid rgb(60, 60, 60);
+  border-right: 0.5rem solid rgb(60, 60, 60);
+  display: flex;
+  align-items: center;
+  transition: transform, width 150ms ease-out;
+}
+
+.question > .frame.next {
+  transform: scale(0.7);
+  min-width: 100px;
+  width: 0%;
+}
+.question > .frame.next > h1 {
+  transition: opacity 50ms ease;
+  opacity: 0;
+}
+
+.question > .frame::before,
+.question > .frame::after,
+.question > .frame > span::before,
+.question > .frame > span::after {
+  width: 1rem;
+  height: 0.5rem;
+  position: absolute;
+  content: "";
+  background-color: rgb(60, 60, 60);
+}
+
+.question > .frame::before {
+  top: 0;
+  left: 0;
+}
+.question > .frame::after {
+  bottom: 0;
+  left: 0;
+}
+
+.question > .frame > span::before {
+  top: 0;
+  right: 0;
+}
+.question > .frame > span::after {
+  bottom: 0;
+  right: 0;
+}
+
+.question > button {
+  padding: 2rem 10rem;
+  font-size: 14pt;
+  color: white;
+  transform: scale(1);
+
+  transition: transform, background-color 300ms ease;
+}
+
+.question > button.error {
+  background-color: red;
+}
+
+.question > button:active {
+  transform: scale(0.6);
+}
+
+.question > button.loading {
+  background-color: rgb(38, 216, 38);
+}
+.question > button.loading::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  content: "";
+
+  border: 5px solid gray;
+}
+
+.question > button.error.answer {
+  animation: shake 250ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.question > button.success {
+  background-color: rgb(38, 216, 38);
+}
+.question > button.qsuccess {
+  background-color: rgb(38, 216, 38);
+}
+.question > button.qsuccess > span {
+  display: none;
+}
+.question > button.qsuccess::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.3rem;
+  height: 1.8rem;
+  border-radius: 0.3rem;
+  content: "";
+  background-color: white;
+
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.question > button.qsuccess::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.3rem;
+  height: 0.9rem;
+  border-radius: 0.3rem;
+  content: "";
+  background-color: white;
+
+  transform: translate(-1rem, -0.2rem) rotate(-45deg);
+}
+
+.question > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 60%;
+  left: 20%;
+}
+
+.question > ul > li {
+  padding: 0.6rem 2rem;
+  cursor: pointer;
+  position: relative;
+  background-color: white;
+
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0.3rem;
+
+  transition: all 200ms ease;
+}
+
+.question > ul > li.selected {
+  background-color: gray;
+  color: white;
+}
+
+.question > ul > li.error {
+  background-color: rgb(255, 0, 0);
+  color: white;
+}
+
+.question > ul > li.success {
+  background-color: rgb(38, 216, 38);
+  color: white;
+}
+
+.question > ul > li:hover {
+  padding-left: 3rem;
+}
+.question > ul > li:hover::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.3rem;
+  content: "";
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.185);
+}
+
+.question > ul > li.error::after {
+  position: absolute;
+  top: 50%;
+  left: 95%;
+  width: 0.3rem;
+  height: 1rem;
+  border-radius: 0.3rem;
+  content: "";
+  background-color: white;
+  box-shadow: none;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.question > ul > li.error::before {
+  position: absolute;
+  top: 50%;
+  left: 95%;
+  width: 0.3rem;
+  height: 1rem;
+  border-radius: 0.3rem;
+  content: "";
+  background-color: white;
+
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.question > ul > li.success::before {
+  position: absolute;
+  top: 50%;
+  left: 95%;
+  width: 0.3rem;
+  height: 1.2rem;
+  border-radius: 0.3rem;
+  content: "";
+  background-color: white;
+
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.question > ul > li.success::after {
+  position: absolute;
+  top: 50%;
+  left: 95%;
+  width: 0.3rem;
+  height: 0.6rem;
+  border-radius: 0.3rem;
+  content: "";
+  background-color: white;
+
+  transform: translate(-0.7rem, -0.2rem) rotate(-45deg);
+}
+
+#question-info {
+  position: absolute;
+  top: 7%;
+  right: 0;
+  padding: 2rem;
+}
+
+@keyframes Submit {
+  0% {
+    padding: 1rem 3rem;
+  }
 }

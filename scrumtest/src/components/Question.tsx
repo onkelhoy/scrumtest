@@ -4,7 +4,10 @@ import 'styles/question.css';
 import { IQuestion } from 'types/question';
 
 export interface Props {
-  question:IQuestion
+  question:IQuestion,
+  index: number,
+  total: number,
+  Answer: (answers:number[]) => boolean;
 }
 
 type Answers = {
@@ -13,57 +16,131 @@ type Answers = {
 
 enum ErrorTypes {
   nothing,
-  answer,
-  picking,
+  answer = "answer",
+  picking = 2,
 }
 
-export default function View ({ question }:Props) {
+export default function View ({ question, Answer, index, total }:Props) {
   const [error, setError] = React.useState(ErrorTypes.picking);
+  const [loading, setLoading] = React.useState(false);
   const [answers, setAnswers] = React.useState({} as Answers);
+  const [errors, setErrors] = React.useState({} as Answers);
+  const [success, setSuccess] = React.useState({} as Answers);
+
+  const timer = React.useRef<null | number>(null);
 
   function toggleAnswer(index:number) {
-    const copy = { ...answers };
-    if (copy[index])
-      delete copy[index];
-
-    copy[index] = true;
-    setAnswers(copy);
-
-    if (Object.keys(copy).length !== question.answers.length) 
-      setError(ErrorTypes.picking);
+    if (!loading) {
+      const copy = { ...answers };
+      if (copy[index])
+        delete copy[index];
+      else copy[index] = true;
+  
+      setAnswers(copy);
+  
+      if (Object.keys(copy).length !== question.answers.length) 
+        setError(ErrorTypes.picking);
+      else setError(ErrorTypes.nothing);
+    }
   }
 
   function submit() {
-    console.log('we are picking these', answers);
+    const ans = Object.keys(answers).map(v => Number(v));
+
+    setLoading(true);
+    timer.current = window.setTimeout(() => {
+      const correct = {} as Answers;
+      const falsly = {} as Answers;
+
+      for (const ans in answers) {
+        if (question.answers.find(v => {
+          if (ans === "0") console.log(v, ans, v.toString(), v.toString() === ans);
+          return v.toString() === ans
+        })) {
+          correct[ans] = true;
+        }
+        else {
+          falsly[ans] = true;
+        }
+      }
+
+      setErrors(falsly);
+      setSuccess(correct);
+
+      if (!Answer(ans)) {
+        setError(ErrorTypes.answer);
+      }
+
+      setLoading(false);
+    }, 250);
   }
 
-  const size = Object.keys(answers).length;
+  React.useEffect(() => {
+    return () => {
+      if (timer.current !== null) {
+        window.clearTimeout(timer.current);
+      }
+    }
+  }, [])
+
+  const arr = Object.keys(answers);
+  const size = arr.length;
   const classList = ['question'];
+
+  React.useEffect(() => {
+    setAnswers({});
+    setErrors({});
+    setSuccess({});
+    setAnswers({});
+    setError(ErrorTypes.picking);
+  }, [question]);
+
+  let isCorrect = true;
+  for (const ans of question.answers) {
+    if (!success[ans]) {
+      isCorrect = false;
+      break;
+    }
+  }
+
   return (
     <div className={classList.join(' ')}>
-      <h4>Question:</h4>
-      <div className="frame">
-        <h1>{question.text}</h1>
+      <span id="question-info"><span>{index + 1}</span>/<span>{total}</span></span>
+      <div className={`frame ${isCorrect ? 'next' : ''}`}>
         <span></span>
+        <h1>{question.text}</h1>
       </div>
 
-      {error === ErrorTypes.answer && <em style={{color:'red'}}>Your answers are wrong!</em>}
-
-      <button onClick={submit} className={error === ErrorTypes.nothing ? 'success' : 'error'}>
-        <span>{size}</span>/<span>{question.answers.length}</span> Answers
-        {/* {!question.desiredAnswers && <><span>{count}</span> out of <span>{question.options.length}</span> Answers Choosen</>} */}
+      <button 
+        disabled={loading} 
+        onClick={submit} 
+        className={isCorrect ? 'qsuccess' : error === ErrorTypes.nothing ? 'success' : `error ${error}`}
+      >
+        <span><span>{size}</span>/<span>{question.answers.length}</span> Answers</span>
       </button>
 
-      <h4>Options</h4>
       <ul>
-        {question.options.map((option, index) => 
-          <li 
+        <h2>Options</h2>
+        {question.options.map((option, index) => {
+
+          const classNames = [];
+          if (answers[index + 1]) {
+            classNames.push('selected');
+
+            if (errors[index + 1]) classNames.push('error');
+            if (success[index + 1]) classNames.push('success');
+          }
+          return (
+<li 
             key={option.toString()} 
-            className={answers[index] ? 'selected' : ''} 
-            onClick={() => toggleAnswer(index)}
+            className={classNames.join(' ')} 
+            onClick={() => toggleAnswer(index + 1)}
           >
             {option}
           </li>
+          )
+        }
+          
         )}
       </ul>
     </div>

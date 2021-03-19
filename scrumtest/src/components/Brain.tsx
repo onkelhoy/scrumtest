@@ -23,6 +23,7 @@ export enum STATES {
 
 interface State {
   score:number,
+  index:number,
   state:STATES,
   finished:{[key:number]:boolean},
   question:IQuestion|null
@@ -33,20 +34,38 @@ export default class Brain extends React.Component {
 
   state:State = {
     score: 0,
+    index: 0,
     finished: {},
     state: STATES.loading,
     question: null
   }
 
-  constructor(props:Props) {
-    super(props);
+  static Timer:null | number;
 
-    console.log("useless constructor");
+  componentDidMount() {
+    const score = window.localStorage.getItem('score');
+    console.log(score)
+    if (score === null) {
+      this.setState({ state: STATES.notification });
+    }
+    else {
+      console.log(STATES.list);
+      this.setState({
+        state: STATES.list,
+        score: Number(score)
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    if (Brain.Timer) {
+      window.clearTimeout(Brain.Timer);
+    }
   }
 
   agree = () => {
     window.localStorage.setItem("score", "0");
-    this.setState({ sate: STATES.list });
+    this.setState({ sate: STATES.list, score: 0 });
   }
 
   disagree = () => {
@@ -54,13 +73,32 @@ export default class Brain extends React.Component {
     this.setState({ sate: STATES.blank });
   }
 
-  loadQuestion(index?:number):void {
+  loadQuestion = (index?:number):void => {
     let _i = this.state.score;
     if (index && index <= this.state.score)
        _i = index;
     
     const question = DATA[_i] as IQuestion;
-    this.setState({ question });
+    this.setState({ question, state: STATES.question, index: _i });
+  }
+
+  Answer = (answers:number[]):boolean => {
+    if (this.state.question === null) return false;
+    if (answers.length === this.state.question.answers.length) {
+      for (let i=0; i<answers.length; i++) {
+        if (answers[i] !== this.state.question.answers[i]) {
+          return false;
+        }
+      }
+
+      if (this.state.index === this.state.score) {
+        this.setState({ score: this.state.score + 1});
+        window.localStorage.setItem("score", (this.state.score + 1).toString());
+      }
+      Brain.Timer = window.setTimeout(() => this.loadQuestion(this.state.index + 1), 1400);
+      return true;
+    }
+    return false;
   }
 
   overlay() {
@@ -69,7 +107,7 @@ export default class Brain extends React.Component {
         return <Loading />
       case STATES.question: 
         if (this.state.question) 
-          return <Question question={this.state.question} />
+          return <Question index={this.state.index} total={DATA.length} Answer={this.Answer} question={this.state.question} />
         return null;
       case STATES.notification:
         return <Notification 
@@ -87,12 +125,10 @@ export default class Brain extends React.Component {
 
     const overlay = this.overlay();
 
-    console.log(DATA)
-
     return (
       <div className="brain">
-        {overlay}
         <List score={this.state.score} count={DATA.length} loadQuestion={this.loadQuestion} />
+        {overlay}
       </div>
     )
   }
